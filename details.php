@@ -26,181 +26,235 @@ class Module_Simpatda extends Module {
 		$this->dbforge->drop_table('simp_organisasi');
 		$this->dbforge->drop_table('simp_pegawai');
 		$this->dbforge->drop_table('simp_rekening');
-    $this->dbforge->drop_table('simp_reklame');
+                $this->dbforge->drop_table('simp_reklame');
 		$this->dbforge->drop_table('simp_rms_reklame');
 		$this->dbforge->drop_table('simp_system');
 		$this->dbforge->drop_table('simp_user');
 		$this->dbforge->drop_table('simp_user_organisasi');
 		$this->dbforge->drop_table('simp_wilayah');
-    $this->dbforge->drop_table('simp_info_kontrak');
-    $this->dbforge->drop_table('simp_no_daftar');
-    $this->dbforge->drop_table('simp_pendaftaran');
-    $this->dbforge->drop_table('simp_pendataan');
-    $this->dbforge->drop_table('simp_pendataan_reklame');
-    $this->dbforge->drop_table('simp_penetapan');
-    $this->dbforge->drop_table('simp_penetapan_reklame');
-    $this->dbforge->drop_table('simp_wajib_pajak');
-    $this->dbforge->drop_table('simp_wajib_pajak_izin');
-    $this->dbforge->drop_table('simp_wajib_pajak_kewajiban');
+                $this->dbforge->drop_table('simp_info_kontrak');
+                $this->dbforge->drop_table('simp_no_daftar');
+                $this->dbforge->drop_table('simp_pendaftaran');
+                $this->dbforge->drop_table('simp_pendataan');
+                $this->dbforge->drop_table('simp_pendataan_reklame');
+                $this->dbforge->drop_table('simp_penetapan');
+                $this->dbforge->drop_table('simp_penetapan_reklame');
+                $this->dbforge->drop_table('simp_wajib_pajak');
+                $this->dbforge->drop_table('simp_wajib_pajak_izin');
+                $this->dbforge->drop_table('simp_wajib_pajak_kewajiban');
 		
         
                 
 
-        $simp_usergroup = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('simp_usergroup') . " (
-  `Insert`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Change`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Delete`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Browse`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Access`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Print`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Print2`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Print3`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Change_StatusAP`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Change_StatusAR`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `Change_StatusIN`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
-  `LACC_SO`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT 'N' COMMENT 'Y = DI Izinkan untuk memberikan Acc SO N = Tidak dI Izinkan untuk memberikan Acc SO' ,
-  `LACC_SLD_Hutang`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT 'N' COMMENT 'Y = DI Izinkan untuk memberikan Acc Saldo Awal Hutang N = Tidak dI Izinkan untuk memberikan Acc Saldo Awal Hutang' ,
-  `LACC_PO`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT 'N' COMMENT 'Y = DI Izinkan untuk memberikan Acc Saldo Awal Hutang N = Tidak dI Izinkan untuk memberikan Acc Saldo Awal Hutang' ,
-  `Transaksi_`  smallint(6) NULL DEFAULT 0 COMMENT '0: No Akses | 1: Akses' ,
-  `TransaksiPendaftaran_`  smallint(6) NULL DEFAULT 0 ,
-  `TransaksiPendataan_`  smallint(6) NULL DEFAULT 0 ,
-  `TransaksiCetakNPWPD_`  smallint(6) NULL DEFAULT 0 ,
-  `TransaksiPenetapan_`  smallint(6) NULL DEFAULT 0 ,
-  `TransaksiPenerbitan_`  smallint(6) NULL DEFAULT 0 ,
-  `TransaksiPelunasan_`  smallint(6) NULL DEFAULT 0 ,
-  `Laporan_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanPendaftaran_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanPenetapan_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanKartu_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanKartuMineral_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanKartuHarga_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanKartuHargaUmum_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanKartuHargaKhusus_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanKartuHargaLainnya_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanPenerimaan_`  smallint(6) NULL DEFAULT 0 ,
-  `LaporanPenerimaanRincian_`  smallint(6) NULL DEFAULT 0 ,
-  `Master_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterWilayah_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterJenisUsaha_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterWajibPajak_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterRekening_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterBebanPajak_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterOrganisasi_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterPegawai_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterPemakai_`  smallint(6) NULL DEFAULT 0 ,
-  `MasterRumusReklame_`  smallint(6) NULL DEFAULT 0 ,
-  `Utilities_`  smallint(6) NULL DEFAULT 0 ,
-  `UtilitiesUser_`  smallint(6) NULL DEFAULT 0 ,
-  `UtilitiesSystem_`  smallint(6) NULL DEFAULT 0 ,
-  `UserID`  varchar(15) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT '' ,
-  `TransaksiPendaftaranWPLama`  smallint(6) NULL DEFAULT 0 ,
-  `Backup`  smallint(6) NULL DEFAULT NULL ,
-  `Restore`  smallint(6) NULL DEFAULT NULL ,
-   PRIMARY KEY (`UserID`),
-   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_usergroup =   "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('simp_usergroup') . " (
+                            `Insert`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Change`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Delete`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Browse`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Access`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Print`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Print2`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Print3`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Change_StatusAP`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Change_StatusAR`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `Change_StatusIN`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT NULL ,
+                            `LACC_SO`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT 'N' COMMENT 'Y = DI Izinkan untuk memberikan Acc SO N = Tidak dI Izinkan untuk memberikan Acc SO' ,
+                            `LACC_SLD_Hutang`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT 'N' COMMENT 'Y = DI Izinkan untuk memberikan Acc Saldo Awal Hutang N = Tidak dI Izinkan untuk memberikan Acc Saldo Awal Hutang' ,
+                            `LACC_PO`  char(1) CHARACTER SET ascii COLLATE ascii_bin NULL DEFAULT 'N' COMMENT 'Y = DI Izinkan untuk memberikan Acc Saldo Awal Hutang N = Tidak dI Izinkan untuk memberikan Acc Saldo Awal Hutang' ,
+                            `Transaksi_`  smallint(6) NULL DEFAULT 0 COMMENT '0: No Akses | 1: Akses' ,
+                            `TransaksiPendaftaran_`  smallint(6) NULL DEFAULT 0 ,
+                            `TransaksiPendataan_`  smallint(6) NULL DEFAULT 0 ,
+                            `TransaksiCetakNPWPD_`  smallint(6) NULL DEFAULT 0 ,
+                            `TransaksiPenetapan_`  smallint(6) NULL DEFAULT 0 ,
+                            `TransaksiPenerbitan_`  smallint(6) NULL DEFAULT 0 ,
+                            `TransaksiPelunasan_`  smallint(6) NULL DEFAULT 0 ,
+                            `Laporan_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanPendaftaran_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanPenetapan_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanKartu_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanKartuMineral_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanKartuHarga_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanKartuHargaUmum_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanKartuHargaKhusus_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanKartuHargaLainnya_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanPenerimaan_`  smallint(6) NULL DEFAULT 0 ,
+                            `LaporanPenerimaanRincian_`  smallint(6) NULL DEFAULT 0 ,
+                            `Master_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterWilayah_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterJenisUsaha_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterWajibPajak_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterRekening_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterBebanPajak_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterOrganisasi_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterPegawai_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterPemakai_`  smallint(6) NULL DEFAULT 0 ,
+                            `MasterRumusReklame_`  smallint(6) NULL DEFAULT 0 ,
+                            `Utilities_`  smallint(6) NULL DEFAULT 0 ,
+                            `UtilitiesUser_`  smallint(6) NULL DEFAULT 0 ,
+                            `UtilitiesSystem_`  smallint(6) NULL DEFAULT 0 ,
+                            `UserID`  varchar(15) CHARACTER SET ascii COLLATE ascii_bin NOT NULL DEFAULT '' ,
+                            `TransaksiPendaftaranWPLama`  smallint(6) NULL DEFAULT 0 ,
+                            `Backup`  smallint(6) NULL DEFAULT NULL ,
+                            `Restore`  smallint(6) NULL DEFAULT NULL ,
+                             PRIMARY KEY (`UserID`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
 
-        $gpsi_contractors = "CREATE TABLE IF NOT EXISTS  " . $this->db->dbprefix('gpsi_contractors') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `position` varchar(45) DEFAULT NULL,
-  `address` varchar(100) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `telephone` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_jenis =   "CREATE TABLE IF NOT EXISTS  " . $this->db->dbprefix('simp_jenis') ." (
+                        `id` int(11) NOT NULL AUTO_INCREMENT                        
+                        `JUsahaID` smallint(6) NOT NULL DEFAULT '0' COMMENT '0: Jenis Konstruksi || 1: Perdagangan Umum || 2: Lain-Lain',
+                        `Description` varchar(50) DEFAULT NULL,
+                        PRIMARY KEY (`JUsahaID`),
+                        UNIQUE KEY `name_UNIQUE` (`Description`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
         
-        $gpsi_contracts = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('gpsi_contracts') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `start_paydate` datetime DEFAULT NULL,
-  `end_paydate` datetime DEFAULT NULL,
-  `start_contract` datetime DEFAULT NULL,
-  `end_contract` datetime DEFAULT NULL,
-  `contractor_id` int(11) DEFAULT NULL,
-  `supplier_id` int(11) DEFAULT NULL,
-  `client_id` int(11) DEFAULT NULL,
-  `term_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_contractor_contract` (`contractor_id`),
-  KEY `fk_suppliers_contract` (`supplier_id`),
-  KEY `fk_clients_contract` (`client_id`),
-  KEY `fk_terms_contract` (`term_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_organisasi = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('simp_organisasi') ." (
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `Kode` varchar(15) NOT NULL DEFAULT '',
+                            `UnitDescription` varchar(50) DEFAULT NULL,
+                            `Level` smallint(6) DEFAULT '1',
+                            `ID` varchar(15) DEFAULT NULL,
+                            `Unit` varchar(50) DEFAULT NULL,
+                            `Ket` varchar(255) DEFAULT NULL,  
+                            PRIMARY KEY (`kode`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
         
-        $gpsi_events = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('gpsi_events') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) DEFAULT NULL,
-  `start` datetime DEFAULT NULL,
-  `end` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_pegawai   =   "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('simp_pegawai') ." (
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `NIP` varchar(20) NOT NULL,
+                            `Nama_Pegawai` varchar(50) DEFAULT NULL,
+                            `Jabatan` varchar(30) DEFAULT NULL,
+                            `Alamat` varchar(50) DEFAULT NULL,
+                            `Kota` varchar(20) DEFAULT NULL,
+                            `NoTelp` varchar(20) DEFAULT NULL,
+                            `KC` char(2) DEFAULT '' COMMENT 'KP = Untuk default nama yang tercetak di SKPD hal 1\r\nBP = Untuk default nama yang tercetak di SKPD hal 2',
+                            PRIMARY KEY (`NIP`)
+                            ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
         
-        $gpsi_expenses = "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('gpsi_expenses') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `receipt_url` varchar(45) DEFAULT NULL,
-  `amount` decimal(10,2) DEFAULT NULL,
-  `contractor_id` int(11) DEFAULT NULL,
-  `type_expense_id` int(11) DEFAULT NULL,
-  `type_currency_id` int(11) DEFAULT NULL,
-  `start` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_contractor` (`contractor_id`),
-  KEY `fk_type_expense` (`type_expense_id`),
-  KEY `fk_type_currency_expenses` (`type_currency_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ";
+        $simp_rekening =    "CREATE TABLE IF NOT EXISTS " . $this->db->dbprefix('simp_rekening') ." (
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `AkunID` char(15) NOT NULL,
+                            `Description` varchar(50) DEFAULT NULL,
+                            `Stat_` smallint(6) DEFAULT '1' COMMENT '1: Rekening || 2: Subject || 3: Object || 4 : Detail || 5 : Sub Detail',
+                            `DescriptionRekening` varchar(50) DEFAULT NULL COMMENT 'Terisi jika stat_ = [2,3,4]',
+                            `DescriptionSubject` varchar(50) DEFAULT NULL COMMENT 'Terisi jika stat_ = [3,4]',
+                            `DescriptionObject` varchar(50) DEFAULT NULL COMMENT 'Terisi jika stat_ = [4]',
+                            `DescriptionDetail` varchar(50) DEFAULT NULL,
+                            `RekeningID` char(15) DEFAULT NULL COMMENT 'Terisi jika stat_ = [2,3,4]',
+                            `SubjectID` char(15) DEFAULT NULL COMMENT 'Terisi jika stat_ = [3,4]',
+                            `ObjectID` char(15) DEFAULT NULL COMMENT 'Terisi jika stat_ = [4]',
+                            `DetailID` char(15) DEFAULT NULL,
+                            `Stat2_` smallint(1) DEFAULT '0' COMMENT 'Digunakan untuk status bahwa ini pajak atau retribusi dan selain dari keduanya menunjukkan itu adalah umum\r\nDimana\r\n0 : Umum\r\n1 : Pajak\r\n2 : Retribusi',
+                            `Stat21_` smallint(6) DEFAULT '0' COMMENT 'Status yang menunjukkan bahwa ini merupakan sub dari Pajak atau Retribusi\r\nDimana\r\n0 : Menunjukkan Tidak\r\n1 : Menunjukkan Ya',
+                            `StatRincian` smallint(6) DEFAULT '0' COMMENT 'Merupakan field yang menunjukkan ada status Rincian atau tidak\r\nDimana\r\n0 : Tidak Ada Rincian\r\n1 : Ada Rincian',
+                            `StatHitung` smallint(6) DEFAULT '0' COMMENT 'Merupakan Jenis Perhitungan yang dikenakan\r\ndimana \r\n1 : Tarif Umum\r\n2 : Tarif Khusus - 1\r\n3 : Tarif Khusus - 2\r\n0 : Tidak Memilih',
+                            `Periode` varchar(4) DEFAULT NULL COMMENT 'Periode ini menunjukkan untuk tahun dan bln\r\n0:Periode\r\n1:Bulan\r\n2:Tahun',
+                            `Prosen` decimal(7,2) DEFAULT '0.00' COMMENT 'Merupakan field untuk perhitungan prosentase',
+                            `HargaDasar` decimal(28,8) DEFAULT '0.00000000' COMMENT 'Field dari harga dasar pajak atau retribusi',
+                            `Satuan` varchar(10) DEFAULT NULL COMMENT 'Field satuan untuk Jenis Pajak atau retribusi ataupun umum',
+                            `_pajak` decimal(7,2) DEFAULT NULL,
+                            PRIMARY KEY (`AkunID`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ";
         
-        $gpsi_reports = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('gpsi_reports') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `event_id` int(11) DEFAULT NULL,
-  `contractor_id` int(11) DEFAULT NULL,
-  `type_hour_id` int(11) DEFAULT NULL,
-  `contract_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_contractor_report` (`contractor_id`),
-  KEY `fk_event_report` (`event_id`),
-  KEY `fk_type_hour_report` (`type_hour_id`),
-  KEY `fk_contracts_reports` (`contract_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_reklame =     "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('gpsi_reports') ." (
+                            `id` int(11) NOT NULL AUTO_INCREMENT, 
+                            `AkunID` varchar(15) NOT NULL,
+                            `Stat_` char(1) DEFAULT NULL,
+                            `Description` varchar(60) DEFAULT NULL,
+                            `HargaDasar` decimal(10,0) DEFAULT NULL,
+                            `Satuan` varchar(10) DEFAULT NULL,
+                            `Keterangan` varchar(100) DEFAULT NULL,
+                            `Prosentase` decimal(10,0) DEFAULT '0',
+                            PRIMARY KEY (`id`,`AkunID`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
         
-        $gpsi_suppliers = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('gpsi_suppliers') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_rms_reklame = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_rms_reklame') ." (
+                            `ThnPeriode` char(4) NOT NULL,
+                            `Thn_` double(5,2) DEFAULT NULL,
+                            `Bln_` double(5,2) DEFAULT NULL,
+                            `Minggu_` double(5,2) DEFAULT NULL,
+                            `Hari_` double(5,2) DEFAULT NULL,
+                            `JlnNegara` double(5,2) DEFAULT NULL,
+                            `JlnKabupaten` double(5,2) DEFAULT NULL,
+                            `JlnLingkungan` double(5,2) DEFAULT NULL,
+                            `SdtPandang>2` double(5,2) DEFAULT NULL,
+                            `SdtPandang2` double(5,2) DEFAULT NULL,
+                            `SdtPandang1` double(5,2) DEFAULT NULL,
+                            `LokasiKhusus` double(5,2) DEFAULT NULL,
+                            `LokasiBiasa` double(5,2) DEFAULT NULL,
+                            PRIMARY KEY (`ThnPeriode`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
         
-        $gpsi_terms = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('gpsi_terms') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `url_UNIQUE` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_system =      "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_system') ." (
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `kode` char(5) NOT NULL DEFAULT '',
+                            `tanggal_pasang` datetime DEFAULT NULL,
+                            `nama_aplikasi` varchar(100) DEFAULT NULL,
+                            `Alamat_aplikasi` varchar(100) DEFAULT NULL,
+                            `no_telp1` varchar(20) DEFAULT NULL,
+                            `no_telp2` varchar(20) DEFAULT NULL,
+                            `kota` varchar(20) DEFAULT NULL,
+                            `beban_administrasi` float DEFAULT NULL,
+                            `biaya` float DEFAULT NULL,
+                            `sumbangan` float DEFAULT NULL,
+                            `Logo` varchar(100) DEFAULT NULL,
+                            `logo2` blob,
+                            `copyright` varchar(50) DEFAULT NULL,
+                            `biayaPemakaian` float DEFAULT NULL,
+                            `version` char(20) DEFAULT NULL,
+                            `BatasWaktu` float DEFAULT '25',
+                            `kdBios` varchar(255) DEFAULT NULL,
+                            `tglBios` datetime DEFAULT NULL,
+                            `TimeTrial` float DEFAULT '30',
+                            `TimeTrialRunning` float DEFAULT '0',
+                            `ucapan` varchar(255) DEFAULT NULL,
+                            `Denda` smallint(1) DEFAULT '1' COMMENT '1 : Entry denda oleh user secara automatis\r\n0 : Entry denda oleh user secara manual',
+                            `StatNoPenetapan` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Jika 1 maka automatic dan jika 0 maka manual',
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `Kode_UNIQUE` (`kode`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
         
-        $gpsi_typecurrency = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('gpsi_typecurrency') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `symbol` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_user =      "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_user') ." (
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `userID` varchar(15) NOT NULL DEFAULT '',
+                            `pass` varchar(50) DEFAULT NULL,
+                            `Nm_user` varchar(30) DEFAULT NULL,
+                            `lnoaktif` char(1) DEFAULT '0',
+                             PRIMARY KEY (`id`),
+                            UNIQUE KEY `name_UNIQUE` (`userID`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
         
-        $gpsi_typeexpenses = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('gpsi_typeexpenses') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_user_organisasi = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_user_organisasi') ." (
+                                `id` int(11) NOT NULL AUTO_INCREMENT,
+                                `UserID` varchar(10) NOT NULL,
+                                `OrganisasiID` varchar(15) NOT NULL,
+                                PRIMARY KEY (`UserID`,`OrganisasiID`)
+                              ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
         
-        $gpsi_typehours = "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('gpsi_typehours') ." (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        $simp_wilayah =  "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_wilayah') ." (
+                                `id` int(11) NOT NULL AUTO_INCREMENT,
+                                `WilayahID` char(10) NOT NULL,
+                                `Nama` varchar(50) DEFAULT NULL,
+                                `Stat_` smallint(1) DEFAULT '1' COMMENT '1: Kabupaten || 2 : Kecamatan || 3 : Desa',
+                                `NamaKabupaten` varchar(50) DEFAULT NULL COMMENT 'Jika Status 2 dan 3 maka Nama Kabupaten diisi dari Nama dengan Stat_ = 1',
+                                `NamaKecamatan` varchar(50) DEFAULT NULL COMMENT 'Jika Status 2 dan 3 maka Nama Kabupaten diisi dari Nama dengan Stat_ = 1',
+                                `KodeKabupaten` char(10) DEFAULT NULL COMMENT 'Jika Status 2 dan 3 maka Kode Kabupaten diisi dari WilayahID dengan Stat_ = 1',
+                                `KodeKecamatan` char(10) DEFAULT NULL COMMENT 'Jika Status 2 dan 3 maka Kode Kecamatan diisi dari WilayahID dengan Stat_ = 2',
+                                `changed_by` varchar(12) DEFAULT NULL,
+                                `Last_Modified` datetime DEFAULT NULL,
+                                PRIMARY KEY (`WilayahID`),
+                                UNIQUE KEY `name_UNIQUE` (`Nama`)
+                              ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
 
+$simp_usergroup = "ALTER TABLE ". $this->db->dbprefix('simp_usergroup') ."
+        ADD CONSTRAINT `fk_user_group` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix('simp_user') ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE";
+
+$simp_reklame = "ALTER TABLE ". $this->db->dbprefix('simp_reklame') ."
+        ADD CONSTRAINT `fk_reklame_akun` FOREIGN KEY (`akunID`) REFERENCES ". $this->db->dbprefix('simp_rekenening') ."(`akunID`) ON DELETE RESTRICT ON UPDATE CASCADE";
+
+$simp_user_organisasi = "ALTER TABLE ". $this->db->dbprefix('simp_user_organisasi') ."
+        ADD CONSTRAINT `fk_ref_user` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix(`simp_user`) ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+        ADD CONSTRAINT `fk_ref_organisasi` FOREIGN KEY (`organisasiID`) REFERENCES ". $this->db->dbprefix(`simp_organisasi`) ."(`organisasiID`) ON DELETE RESTRICT ON UPDATE CASCADE";
+            
 $gpsi_alter_contracts = "ALTER TABLE ". $this->db->dbprefix('gpsi_contracts') ."
   ADD CONSTRAINT `fk_contractor_contract` FOREIGN KEY (`contractor_id`) REFERENCES ". $this->db->dbprefix('gpsi_contractors') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_suppliers_contract` FOREIGN KEY (`supplier_id`) REFERENCES ". $this->db->dbprefix('gpsi_suppliers') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
