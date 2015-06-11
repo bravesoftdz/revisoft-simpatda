@@ -244,6 +244,212 @@ class Module_Simpatda extends Module {
                                 PRIMARY KEY (`WilayahID`),
                                 UNIQUE KEY `name_UNIQUE` (`Nama`)
                               ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+        
+        $simp_info_kontrak =    "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_info_kontrak') ." (
+                                `npwpd` varchar(20) NOT NULL,
+                                `noformulir` varchar(12) NOT NULL,
+                                `nokontrak` varchar(50) DEFAULT NULL,
+                                `keterangan` varchar(255) DEFAULT NULL,
+                                `nilaikontrak` decimal(28,8) DEFAULT NULL,
+                                PRIMARY KEY (`npwpd`,`noformulir`)
+                              ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+       
+        $simp_no_daftar    =    "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_no_daftar') ."(
+                                `NoForm` varchar(10) NOT NULL,
+                                `NPWPD` varchar(20) NOT NULL,
+                                PRIMARY KEY (`NoForm`,`NPWPD`)
+                              ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+        
+        $simp_pendaftaran  =    "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_pendaftaran') ."(
+                                `Tgl_Daftar` date NOT NULL,
+                                `No_Form_Daftar` char(10) NOT NULL,
+                                `NPWPD` varchar(20) NOT NULL,
+                                `User_ID` char(10) DEFAULT NULL,
+                                `Stat_` tinyint(4) DEFAULT '0' COMMENT '0 : Sudah || 1 : Belum || 2 : Sambung',
+                                `No_Urut_Form_Thn` smallint(7) DEFAULT NULL,
+                                `No_Urut_NPWPD_Thn` smallint(7) DEFAULT NULL,
+                                `TglU` datetime DEFAULT NULL,
+                                `NMPenerima` varchar(20) DEFAULT NULL,
+                                `NMPencatat` varchar(20) DEFAULT NULL,
+                                `statWP` smallint(1) DEFAULT '0' COMMENT '0 : Laporan WP || 1 : Laporan Pendataan',
+                                PRIMARY KEY (`Tgl_Daftar`,`No_Form_Daftar`,`NPWPD`),
+                                KEY `FKNPWPD_WP` (`NPWPD`) USING BTREE,
+                                KEY `No_Form_Daftar` (`No_Form_Daftar`)
+                              ) ENGINE=InnoDB DEFAULT Charset=latin1";
+        
+        $simp_pendataan =   "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_pendataan') ."(
+                            `TglDaftar` date NOT NULL,
+                            `NOForm` varchar(10) NOT NULL,
+                            `NoUrut` smallint(6) NOT NULL,
+                            `NPWPD` varchar(20) NOT NULL,
+                            `Ayat` varchar(15) DEFAULT NULL COMMENT 'merupakan fiedl yang menampung Rekening',
+                            `Omzet` decimal(28,8) DEFAULT '0.00000000' COMMENT 'merupakan field dasar penanganan pajak',
+                            `TglAwal` date DEFAULT NULL,
+                            `TglAkhir` date DEFAULT NULL,
+                            `Beban_Pajak` decimal(28,8) DEFAULT '0.00000000' COMMENT 'Merupakan Field Tarif',
+                            `TglU` datetime DEFAULT NULL,
+                            `Stat_` smallint(6) DEFAULT '0' COMMENT 'Flag yang akan menandakan apakah data pendataan telah ditetapkan\r\n0: Belum Ditetapkan\r\n1: Sudah Ditetapkan',
+                            `Hutang` decimal(28,8) DEFAULT NULL,
+                            `StatHutang_` smallint(6) DEFAULT '0',
+                            `NOSPTPD` varchar(12) NOT NULL,
+                            `JNSHitung` smallint(1) DEFAULT NULL,
+                            `PDJMS` char(255) DEFAULT NULL,
+                            `Ukuran` decimal(18,8) DEFAULT NULL,
+                            `Satuan` char(10) DEFAULT NULL,
+                            `Denda` decimal(28,8) DEFAULT NULL,
+                            `BulanDenda` smallint(6) DEFAULT NULL,
+                            `Status_` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Untuk mengetahui data sudah disimpan atau belum',
+                            PRIMARY KEY (`TglDaftar`,`NOForm`,`NoUrut`,`NPWPD`,`NOSPTPD`),
+                            KEY `NPWPD_` (`NPWPD`) USING BTREE,
+                            KEY `FK_NOForm` (`NOForm`),
+                            KEY `TglDaftar` (`TglDaftar`,`NOForm`,`NPWPD`,`Ayat`,`NoUrut`)
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+        
+        $simp_pendataan_reklame =   "CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_pendataan_reklame') ."(
+                                    `NoForm` varchar(10) NOT NULL,
+                                    `NoUrut` smallint(6) NOT NULL,
+                                    `TglDaftar` date NOT NULL,
+                                    `Ayat` varchar(15) DEFAULT NULL COMMENT 'Kode Rekening',
+                                    `RInduk` char(1) DEFAULT NULL COMMENT 'A-Z',
+                                    `Ukuran_Satuan` decimal(18,8) DEFAULT NULL,
+                                    `LamaPemasangan` int(2) DEFAULT NULL,
+                                    `StatThn_` char(1) DEFAULT NULL COMMENT 'T: Tahun | B: Bulan | H: Hari | M: Minggu',
+                                    `StatJln_` char(1) DEFAULT NULL COMMENT 'N : Negara | K : Kabupaten | L: Lingkungan',
+                                    `StatSdt_` char(1) DEFAULT NULL COMMENT 'A : > Sisi | B: 2 Sisi | C: 1 Sisi',
+                                    `StatLok_` char(1) DEFAULT NULL COMMENT 'K or B',
+                                    `NPWPD` varchar(17) NOT NULL,
+                                    `NamaJalan` varchar(40) DEFAULT NULL,
+                                    `NLamaPsg` double(5,2) DEFAULT NULL,
+                                    `NJalan` double(5,2) DEFAULT NULL,
+                                    `NSdtPandang` double(5,2) DEFAULT NULL,
+                                    `NLokasi` double(5,2) DEFAULT NULL,
+                                    `HrgDasar` double(28,8) DEFAULT NULL,
+                                    `NtotalLamaPsg` double(28,8) DEFAULT NULL,
+                                    `NTotalJalan` double(28,8) DEFAULT NULL,
+                                    `NTotalSdtPandang` double(28,8) DEFAULT NULL,
+                                    `NTotalLokasi` double(28,8) DEFAULT NULL,
+                                    `Beban_Pajak` double(5,2) DEFAULT NULL,
+                                    `Jumlah_` double(5,2) DEFAULT NULL,
+                                    `NTotalJumlah` double(28,8) DEFAULT NULL,
+                                    `Tunggakan` int(11) NOT NULL DEFAULT '0',
+                                    `NTunggakan` double(28,8) NOT NULL DEFAULT '0.00000000',
+                                    PRIMARY KEY (`NoForm`,`NoUrut`,`TglDaftar`,`NPWPD`)
+                                  ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+        
+        $simp_penetapan     =   "CREATE TABLE IF NOT EXISTS ". $this->db-dbprefix('simp_penetapan') ."(
+                                `TglDaftar` date NOT NULL,
+                                `NOForm` varchar(10) NOT NULL,
+                                `NoUrut` smallint(6) NOT NULL,
+                                `NPWPD` varchar(20) NOT NULL,
+                                `Ayat` varchar(15) DEFAULT NULL COMMENT 'merupakan fiedl yang menampung Rekening',
+                                `Omzet` decimal(28,8) DEFAULT '0.00000000' COMMENT 'merupakan field dasar penanganan pajak',
+                                `TglAwal` date DEFAULT NULL,
+                                `TglAkhir` date DEFAULT NULL,
+                                `Beban_Pajak` decimal(28,8) DEFAULT '0.00000000' COMMENT 'Merupakan Pajak Terhutang Rumusnya Tarif Dasar * Omzet',
+                                `TglU` datetime DEFAULT NULL,
+                                `Stat_` smallint(6) DEFAULT '0' COMMENT 'Flag yang akan menandakan apakah data pendataan telah ditetapkan\r\n0: Belum Ditetapkan\r\n1: Sudah Ditetapkan',
+                                `Hutang` decimal(28,8) DEFAULT NULL,
+                                `Acc_` varchar(20) DEFAULT NULL COMMENT 'Di isi Nip pegawai',
+                                `StatLunas_` smallint(6) DEFAULT '0' COMMENT '0 : Belum Lunas\r\n1 : Lunas',
+                                `NOFormulir` varchar(12) NOT NULL DEFAULT '' COMMENT 'Digunakan untuk menyimpan noformulir penetapan',
+                                `TglJthTempo` date DEFAULT NULL,
+                                `TglFormulir` date DEFAULT '0000-00-00',
+                                `Denda` decimal(28,8) DEFAULT NULL,
+                                `Periode_` smallint(6) DEFAULT NULL,
+                                `Bulan_` varchar(30) DEFAULT NULL,
+                                `Tahun_` int(11) DEFAULT NULL,
+                                `Ukuran_` decimal(18,8) DEFAULT NULL,
+                                `TglPelunasan` date DEFAULT NULL,
+                                `bulandenda_` double(5,2) DEFAULT NULL,
+                                PRIMARY KEY (`TglDaftar`,`NOForm`,`NoUrut`,`NOFormulir`,`NPWPD`),
+                                KEY `NPWPD_` (`NPWPD`) USING BTREE,
+                                KEY `FK_NOForm` (`NOForm`),
+                                KEY `TglDaftar` (`TglDaftar`,`NOForm`,`NPWPD`,`Ayat`,`NoUrut`),
+                                CONSTRAINT `tpenetapan_ibfk_1` FOREIGN KEY (`NOForm`) REFERENCES `tpendaftaran` (`No_Form_Daftar`) ON DELETE NO ACTION ON UPDATE CASCADE
+                              ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+  
+        $simp_penetapan_reklame =   "CREATE TABLE ". $this->db->dbprefix('simp_penetapan_reklame') ."(
+                                    `NoForm` varchar(10) NOT NULL,
+                                    `NoUrut` smallint(6) NOT NULL,
+                                    `TglDaftar` date NOT NULL,
+                                    `Ayat` varchar(15) DEFAULT NULL COMMENT 'Kode Rekening',
+                                    `RInduk` char(1) DEFAULT NULL COMMENT 'A-Z',
+                                    `Ukuran_Satuan` decimal(18,8) DEFAULT NULL,
+                                    `LamaPemasangan` int(2) DEFAULT NULL,
+                                    `StatThn_` char(1) DEFAULT NULL COMMENT 'T: Tahun | B: Bulan | H: Hari | M: Minggu',
+                                    `StatJln_` char(1) DEFAULT NULL COMMENT 'N : Negara | K : Kabupaten | L: Lingkungan',
+                                    `StatSdt_` char(1) DEFAULT NULL COMMENT 'A : > Sisi | B: 2 Sisi | C: 1 Sisi',
+                                    `StatLok_` char(1) DEFAULT NULL COMMENT 'K or B',
+                                    `NPWPD` varchar(17) NOT NULL,
+                                    `NamaJalan` varchar(40) DEFAULT NULL,
+                                    `NLamaPsg` double(5,2) DEFAULT NULL,
+                                    `NJalan` double(5,2) DEFAULT NULL,
+                                    `NSdtPandang` double(5,2) DEFAULT NULL,
+                                    `NLokasi` double(5,2) DEFAULT NULL,
+                                    `HrgDasar` double(28,8) DEFAULT NULL,
+                                    `NtotalLamaPsg` double(28,8) DEFAULT NULL,
+                                    `NTotalJalan` double(28,8) DEFAULT NULL,
+                                    `NTotalSdtPandang` double(28,8) DEFAULT NULL,
+                                    `NTotalLokasi` double(28,8) DEFAULT NULL,
+                                    `TglFormulir` date NOT NULL,
+                                    `NoFormulir` varchar(10) NOT NULL,
+                                    `Beban_pajak` double(5,2) DEFAULT '0.00',
+                                    `Jumlah_` double(5,2) DEFAULT NULL,
+                                    `NtotalJumlah` double(28,8) DEFAULT NULL,
+                                    `Denda` double(5,2) DEFAULT NULL,
+                                    `Tunggakan` int(11) NOT NULL DEFAULT '0',
+                                    `NTunggakan` double(28,8) NOT NULL DEFAULT '0.00000000',
+                                    PRIMARY KEY (`NoForm`,`NoUrut`,`TglDaftar`,`NPWPD`,`NoFormulir`,`TglFormulir`)
+                                  ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+
+        $simp_wajib_pajak = "CREATE TABLE ". $this->db->dbprefix('simp_wajib_pajak') ."(
+                            `NPWPD` varchar(20) NOT NULL,
+                            `Nm_BadanUsaha` varchar(50) DEFAULT NULL,
+                            `Alamat_Usaha` varchar(80) DEFAULT NULL,
+                            `Alamat_No_Usaha` varchar(80) DEFAULT NULL,
+                            `Rt_Usaha` char(2) DEFAULT NULL,
+                            `Rw_Usaha` char(2) DEFAULT NULL,
+                            `Rk_Usaha` char(2) DEFAULT NULL,
+                            `Kd_Wil_Usaha` char(10) DEFAULT NULL,
+                            `Telp_Usaha` varchar(20) DEFAULT NULL,
+                            `Kotak_Pos` char(5) DEFAULT NULL,
+                            `Kode_Usaha` smallint(6) DEFAULT NULL,
+                            `Modal_Kerja` decimal(10,0) DEFAULT NULL,
+                            `Nm_Pemilik` varchar(50) DEFAULT NULL,
+                            `Jabatan` varchar(20) DEFAULT NULL,
+                            `Alamat_Pemilik` varchar(80) DEFAULT NULL,
+                            `Alamat_No_Pemilik` varchar(80) DEFAULT NULL,
+                            `Rt_Pemilik` char(2) DEFAULT NULL,
+                            `Rw_Pemilik` char(2) DEFAULT NULL,
+                            `Rk_Pemilik` char(2) DEFAULT NULL,
+                            `Kd_Wil_Pemilik` varchar(10) DEFAULT NULL,
+                            `Telp_Usaha_Pemilik` varchar(20) DEFAULT NULL,
+                            `Kotak_Pos_Pemilik` char(10) DEFAULT NULL,
+                            `Jml_Izin` smallint(6) DEFAULT NULL,
+                            `lAktif` smallint(1) DEFAULT '1',
+                            PRIMARY KEY (`NPWPD`),
+                            KEY `TKDWilPajakPemilik` (`Kd_Wil_Pemilik`) USING BTREE,
+                            KEY `Kd_Wil_Usaha` (`Kd_Wil_Usaha`,`Kd_Wil_Pemilik`) USING BTREE,
+                            KEY `Kd_Wil_Usaha_2` (`Kd_Wil_Usaha`) USING BTREE
+                          ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
+        
+        $simp_wajib_pajak_izin ="CREATE TABLE IF NOT EXISTS ". $this->db->dbprefix('simp_wajib_pajak_izin') ."(
+                                `NPWPD` varchar(20) NOT NULL,
+                                `No_Urut` smallint(6) NOT NULL,
+                                `Jns_Surat_Ijin` varchar(20) DEFAULT NULL,
+                                `No_Surat_Ijin` varchar(30) DEFAULT NULL,
+                                `Tgl_Berlaku` date DEFAULT NULL,
+                                `Tgl_Berakhir` date DEFAULT NULL,
+                                PRIMARY KEY (`NPWPD`,`No_Urut`),
+                                KEY `NPWPD` (`NPWPD`) USING BTREE,
+                                CONSTRAINT `twajib_pajak_izin_ibfk_1` FOREIGN KEY (`NPWPD`) REFERENCES `twajib_pajak` (`NPWPD`) ON DELETE CASCADE ON UPDATE CASCADE
+                              ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+
+        $simp_wajib_pajak_kewajiban = "CREATE TABLE IF NOT EXIST ". $this->db->dbprefix('simp_wajib_pajak_kewajiban') ."(
+                                        `NPWPD` varchar(20) NOT NULL,
+                                        `RekeningID` varchar(20) NOT NULL,
+                                        PRIMARY KEY (`NPWPD`,`RekeningID`)
+                                      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
 
 $simp_usergroup = "ALTER TABLE ". $this->db->dbprefix('simp_usergroup') ."
         ADD CONSTRAINT `fk_user_group` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix('simp_user') ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE";
