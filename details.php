@@ -451,16 +451,21 @@ class Module_Simpatda extends Module {
                                         PRIMARY KEY (`NPWPD`,`RekeningID`)
                                       ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
 
-$simp_usergroup = "ALTER TABLE ". $this->db->dbprefix('simp_usergroup') ."
-        ADD CONSTRAINT `fk_user_group` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix('simp_user') ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE";
+        $simp_usergroup = "ALTER TABLE ". $this->db->dbprefix('simp_usergroup') ."
+                ADD CONSTRAINT `fk_user_group` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix('simp_user') ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE";
 
-$simp_reklame = "ALTER TABLE ". $this->db->dbprefix('simp_reklame') ."
-        ADD CONSTRAINT `fk_reklame_akun` FOREIGN KEY (`akunID`) REFERENCES ". $this->db->dbprefix('simp_rekenening') ."(`akunID`) ON DELETE RESTRICT ON UPDATE CASCADE";
+        $simp_reklame = "ALTER TABLE ". $this->db->dbprefix('simp_reklame') ."
+                ADD CONSTRAINT `fk_reklame_akun` FOREIGN KEY (`akunID`) REFERENCES ". $this->db->dbprefix('simp_rekenening') ."(`akunID`) ON DELETE RESTRICT ON UPDATE CASCADE";
 
-$simp_user_organisasi = "ALTER TABLE ". $this->db->dbprefix('simp_user_organisasi') ."
-        ADD CONSTRAINT `fk_ref_user` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix(`simp_user`) ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE,
-        ADD CONSTRAINT `fk_ref_organisasi` FOREIGN KEY (`organisasiID`) REFERENCES ". $this->db->dbprefix(`simp_organisasi`) ."(`organisasiID`) ON DELETE RESTRICT ON UPDATE CASCADE";
-            
+        $simp_user_organisasi = "ALTER TABLE ". $this->db->dbprefix('simp_user_organisasi') ."
+                ADD CONSTRAINT `fk_ref_user` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix(`simp_user`) ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE,
+                ADD CONSTRAINT `fk_ref_organisasi` FOREIGN KEY (`organisasiID`) REFERENCES ". $this->db->dbprefix('simp_organisasi'`') ."(`organisasiID`) ON DELETE RESTRICT ON UPDATE CASCADE";
+         
+        $simp_pendataan = "ALTER TABLE ". $this->db->dbprefix('simp_pendataan') ."
+                ADD CONSTRAINT `fk_ref_npwpd_wajib_pajak` FOREIGN KEY (`NPWPD`) REFERENCES ". $this->db-dbprefix('simp_wajib_pajak') ."(`NPWPD`) ON DELETE RESTRICT ON UPDATE CASCADE",
+                ADD CONSTRAINT `fk_ref_npwpd_daftar` FOREIGN KEY (`TglDaftar`) REFERENCES ". $this->db-dbprefix('simp_pendaftaran') ."(`NPWPD`) ON DELETE RESTRICT ON UPDATE CASCADE";
+
+                
 $gpsi_alter_contracts = "ALTER TABLE ". $this->db->dbprefix('gpsi_contracts') ."
   ADD CONSTRAINT `fk_contractor_contract` FOREIGN KEY (`contractor_id`) REFERENCES ". $this->db->dbprefix('gpsi_contractors') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_suppliers_contract` FOREIGN KEY (`supplier_id`) REFERENCES ". $this->db->dbprefix('gpsi_suppliers') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
