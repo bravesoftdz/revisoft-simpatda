@@ -21,17 +21,17 @@ class Module_Simpatda extends Module {
     }
 
     public function install() {
-		$this->dbforge->drop_table('simp_usergroup');
-		$this->dbforge->drop_table('simp_jenis');
-		$this->dbforge->drop_table('simp_organisasi');
-		$this->dbforge->drop_table('simp_pegawai');
-		$this->dbforge->drop_table('simp_rekening');
+        		$this->dbforge->drop_table('simp_usergroup');
+        		$this->dbforge->drop_table('simp_jenis');
+        		$this->dbforge->drop_table('simp_organisasi');
+        		$this->dbforge->drop_table('simp_pegawai');
+        		$this->dbforge->drop_table('simp_rekening');
                 $this->dbforge->drop_table('simp_reklame');
-		$this->dbforge->drop_table('simp_rms_reklame');
-		$this->dbforge->drop_table('simp_system');
-		$this->dbforge->drop_table('simp_user');
-		$this->dbforge->drop_table('simp_user_organisasi');
-		$this->dbforge->drop_table('simp_wilayah');
+        		$this->dbforge->drop_table('simp_rms_reklame');
+        		$this->dbforge->drop_table('simp_system');
+        		$this->dbforge->drop_table('simp_user');
+        		$this->dbforge->drop_table('simp_user_organisasi');
+        		$this->dbforge->drop_table('simp_wilayah');
                 $this->dbforge->drop_table('simp_info_kontrak');
                 $this->dbforge->drop_table('simp_no_daftar');
                 $this->dbforge->drop_table('simp_pendaftaran');
@@ -451,42 +451,34 @@ class Module_Simpatda extends Module {
                                         PRIMARY KEY (`NPWPD`,`RekeningID`)
                                       ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ";
 
-        $simp_usergroup = "ALTER TABLE ". $this->db->dbprefix('simp_usergroup') ."
+        $simp_alter_usergroup = "ALTER TABLE ". $this->db->dbprefix('simp_usergroup') ."
                 ADD CONSTRAINT `fk_user_group` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix('simp_user') ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE";
 
-        $simp_reklame = "ALTER TABLE ". $this->db->dbprefix('simp_reklame') ."
+        $simp_alter_reklame = "ALTER TABLE ". $this->db->dbprefix('simp_reklame') ."
                 ADD CONSTRAINT `fk_reklame_akun` FOREIGN KEY (`akunID`) REFERENCES ". $this->db->dbprefix('simp_rekenening') ."(`akunID`) ON DELETE RESTRICT ON UPDATE CASCADE";
 
-        $simp_user_organisasi = "ALTER TABLE ". $this->db->dbprefix('simp_user_organisasi') ."
+        $simp_alter_user_organisasi = "ALTER TABLE ". $this->db->dbprefix('simp_user_organisasi') ."
                 ADD CONSTRAINT `fk_ref_user` FOREIGN KEY (`userID`) REFERENCES ". $this->db->dbprefix(`simp_user`) ."(`userID`) ON DELETE RESTRICT ON UPDATE CASCADE,
-                ADD CONSTRAINT `fk_ref_organisasi` FOREIGN KEY (`organisasiID`) REFERENCES ". $this->db->dbprefix('simp_organisasi'`') ."(`organisasiID`) ON DELETE RESTRICT ON UPDATE CASCADE";
+                ADD CONSTRAINT `fk_ref_organisasi` FOREIGN KEY (`organisasiID`) REFERENCES ". $this->db->dbprefix('simp_organisasi') ."(`organisasiID`) ON DELETE RESTRICT ON UPDATE CASCADE";
          
-        $simp_pendataan = "ALTER TABLE ". $this->db->dbprefix('simp_pendataan') ."
-                ADD CONSTRAINT `fk_ref_npwpd_wajib_pajak` FOREIGN KEY (`NPWPD`) REFERENCES ". $this->db-dbprefix('simp_wajib_pajak') ."(`NPWPD`) ON DELETE RESTRICT ON UPDATE CASCADE",
-                ADD CONSTRAINT `fk_ref_npwpd_daftar` FOREIGN KEY (`TglDaftar`) REFERENCES ". $this->db-dbprefix('simp_pendaftaran') ."(`NPWPD`) ON DELETE RESTRICT ON UPDATE CASCADE";
+        $simp_alter_pendataan = "ALTER TABLE ". $this->db->dbprefix('simp_pendataan') ."
+                ADD CONSTRAINT `fk_ref_npwpd_wajib_pajak` FOREIGN KEY (`NPWPD`) REFERENCES ". $this->db->dbprefix('simp_wajib_pajak') ."(`NPWPD`) ON DELETE RESTRICT ON UPDATE CASCADE,
+                ADD CONSTRAINT `fk_ref_tglDaftar_daftar` FOREIGN KEY (`TglDaftar`) REFERENCES ". $this->db->dbprefix('simp_pendaftaran') ."(`TglDaftar`) ON DELETE RESTRICT ON UPDATE CASCADE";
 
+        $simp_alter_pendataan_reklame = "ALTER TABLE ". $this->db->dbprefix('simp_pendataan_reklame') ."
+                ADD CONSTRAINT `fk_ref_noForm_` FOREIGN KEY (`NoForm`) REFERENCES ".$this->db->dbprefix('simp_pendataan') ."(`NoForm`) ON DELETE RESTRICT ON UPDATE CASCADE,
+                ADD CONSTRAINT `fk_ref_Ayat_pendataan` FOREIGN KEY (`Ayat`) REFERENCES ".$this->db->dbprefix('simp_pendataan') ."(Ayat) ON DELETE RESTRICT ON UPDATE CASCADE;"       
+
+        $simp_alter_penetapan = "ALTER TABLE ". $this->db->dbprefix('simp_penetapan') ."
+                ADD CONSTRAINT `fk_ref_npwpd_pendataan` FOREIGN KEY (`NPWPD`) REFERENCES ". $this->db->dbprefix('simp_pendataan') ."(`NPWPD`) ON DELETE RESTRICT ON UPDATE CASCADE,
+                ADD CONSTRAINT `fk_ref_tglDaftar_pendataan` FOREIGN KEY (`TglDaftar`) REFERENCES ". $this->db->dbprefix('simp_pendataan') ."(`TglDaftar`) ON DELETE RESTRICT ON UPDATE CASCADE";
+
+        $simp_alter_penetapan_reklame = "ALTER TABLE ". $this->db->dbprefix('simp_pendataan_reklame') ."
+                ADD CONSTRAINT `fk_ref_noForm_penetapan` FOREIGN KEY (`NoForm`) REFERENCES ".$this->db->dbprefix('simp_penetapan') ."(`NoForm`) ON DELETE RESTRICT ON UPDATE CASCADE,
+                ADD CONSTRAINT `fk_ref_Ayat_penetapan` FOREIGN KEY (`Ayat`) REFERENCES ".$this->db->dbprefix('simp_penetapan') ."(Ayat) ON DELETE RESTRICT ON UPDATE CASCADE;"       
                 
-$gpsi_alter_contracts = "ALTER TABLE ". $this->db->dbprefix('gpsi_contracts') ."
-  ADD CONSTRAINT `fk_contractor_contract` FOREIGN KEY (`contractor_id`) REFERENCES ". $this->db->dbprefix('gpsi_contractors') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_suppliers_contract` FOREIGN KEY (`supplier_id`) REFERENCES ". $this->db->dbprefix('gpsi_suppliers') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_clients_contract` FOREIGN KEY (`client_id`) REFERENCES ". $this->db->dbprefix('gpsi_clients') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_terms_contract` FOREIGN KEY (`term_id`) REFERENCES ". $this->db->dbprefix('gpsi_terms') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION";
 
-        $gpsi_alter_expenses = "ALTER TABLE ". $this->db->dbprefix('gpsi_expenses') ."
-  ADD CONSTRAINT `fk_contractor_expenses` FOREIGN KEY (`contractor_id`) REFERENCES ". $this->db->dbprefix('gpsi_contractors') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_type_expense_expenses` FOREIGN KEY (`type_expense_id`) REFERENCES ". $this->db->dbprefix('gpsi_typeexpenses') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_type_currency_expenses` FOREIGN KEY (`type_currency_id`) REFERENCES ". $this->db->dbprefix('gpsi_typecurrency') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-		";
-        
-        $gpsi_alter_reports = "ALTER TABLE ". $this->db->dbprefix('gpsi_reports') ."
-ADD CONSTRAINT `fk_contracts_reports` FOREIGN KEY (`contract_id`) REFERENCES ". $this->db->dbprefix('gpsi_contracts') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,  
-ADD CONSTRAINT `fk_contractor_reports` FOREIGN KEY (`contractor_id`) REFERENCES ". $this->db->dbprefix('gpsi_contractors') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_event_reports` FOREIGN KEY (`event_id`) REFERENCES ". $this->db->dbprefix('gpsi_events') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_type_hour_reports` FOREIGN KEY (`type_hour_id`) REFERENCES ". $this->db->dbprefix('gpsi_typehours') ." (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-            
-            ";
-
-        if ($this->db->query($gpsi_clients) && 
+        if ($this->db->query($simp) && 
             $this->db->query($gpsi_contractors) &&
             $this->db->query($gpsi_contracts) &&
             $this->db->query($gpsi_events) &&
@@ -499,7 +491,35 @@ ADD CONSTRAINT `fk_contractor_reports` FOREIGN KEY (`contractor_id`) REFERENCES 
             $this->db->query($gpsi_typehours) &&    
             $this->db->query($gpsi_alter_expenses) &&
             $this->db->query($gpsi_alter_reports) &&
-                $this->db->query($gpsi_alter_contracts)
+            $this->db->query($gpsi_alter_contracts)
+            $this->db->query($simp_usergroup) &&
+            $this->db->query($simp_jenis)&&
+            $this->db->query($simp_organisasi)&&
+            $this->db->query($simp_pegawai)&&
+            $this->db->query($simp_rekening)&&
+            $this->db->query($simp_reklame)&&
+            $this->db->query($simp_rms_reklame)&&
+            $this->db->query($simp_system)&&
+            $this->db->query($simp_user)&&
+            $this->db->query($simp_user_organisasi)&&
+            $this->db->query($simp_wilayah)&&
+            $this->db->query($simp_info_kontrak)&&
+            $this->db->query($simp_no_daftar)&&
+            $this->db->query($simp_pendaftaran)&&
+            $this->db->query($simp_pendataan)&&
+            $this->db->query($simp_pendataan_reklame)&&
+            $this->db->query($simp_penetapan)&&
+            $this->db->query($simp_penetapan_reklame)&&
+            $this->db->query($simp_wajib_pajak)&&
+            $this->db->query($simp_wajib_pajak_izin)&&
+            $this->db->query($simp_wajib_pajak_kewajiban)&&
+            $this->db->query($simp_alter_usergroup)&&
+            $this->db->query($simp_alter_reklame)&&
+            $this->db->query($simp_alter_user_organisasi)&&
+            $this->db->query($simp_alter_pendataan)&&
+            $this->db->query($simp_alter_pendataan_reklame)&&
+            $this->db->query($simp_alter_penetapan)&&
+            $this->db->query($simp_alter_penetapan_reklame)
                 ) {
             return TRUE;
         }
@@ -518,7 +538,7 @@ ADD CONSTRAINT `fk_contractor_reports` FOREIGN KEY (`contractor_id`) REFERENCES 
         // Return a string containing help info
         // You could include a file and return it here.
         return "<h4>Overview</h4>
-		<p>The contractors module is the application that controls the submitting of Contractors Hours of Work, and generates receipts based on that input.</p>
+		<p>The simpatda module is the application that controls the submitting of pajak or retribusi, and generates receipts based on that input.</p>
 		<h4>More information to be added</h4>
 		<p>Help will be added here</p>";
     }
